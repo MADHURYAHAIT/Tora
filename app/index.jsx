@@ -5,9 +5,9 @@ export default function Page() {
   return (
     <View className="flex-1 items-center justify-center bg-primary">
  
-        <Text className="color-white">Hello ! World</Text>
+        <Text className="color-white font-pblack text-3xl">Tora !</Text>
         <StatusBar style="auto"/>
-        <Link href={"/profile"}>Go To Profile</Link>
+        <Link href={"/home"}>Go To Home</Link>
 
     </View>
   );
