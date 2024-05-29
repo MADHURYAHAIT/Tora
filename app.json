@@ -1,27 +1,12 @@
 {
   "expo": {
     "name": "Tora",
-    "scheme": "tora",
+    "scheme": "myapp",
     "slug": "Tora",
-    "orientation": "portrait",
-
-    "icon": "./assets/icon/android/playstore-icon.png",
     "version": "1.0.0",
     "plugins": [
       "expo-router"
-    ],
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/images/splash.png",
-        "backgroundColor": "#161622"
-      },
-      "package": "com.anonymous.Tora"
-    },
-    "web": {
-      "favicon": "./assets/icon/web/favicon.png"
-    },
-    "assetBundlePatterns": [
-      "**/*"
     ]
   }
 }
+

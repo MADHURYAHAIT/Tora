@@ -21,9 +21,6 @@ const Rootlayout = () => {
 
     if(error) throw error;
     if(fontsLoaded) SplashScreen.hideAsync();
-
-
-
   },[fontsLoaded,error])
 
   if(!fontsLoaded && !error) return null ;
