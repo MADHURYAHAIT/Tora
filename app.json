@@ -1,29 +1,26 @@
 {
   "expo": {
     "name": "Tora",
-    "scheme":"tora",
+    "scheme": "tora",
     "slug": "Tora",
-    "orientation":"portrait",
-    "splash":{
-      "image":"./assets/icon/android/mipmap-xxxhdpi/ic_launcher_foreground.png",
-      "resizeMode":"contain",
-      "backgrundColor":"#ffffff"
-    },
-    "icon":"./assets/icon/android/playstore-icon.png",
+    "orientation": "portrait",
+
+    "icon": "./assets/icon/android/playstore-icon.png",
     "version": "1.0.0",
     "plugins": [
       "expo-router"
     ],
-    "android":{
-      "adaptiveIcon":{  
-        "foregroundImage":"./assets/icon/android/mipmap-xxxhdpi/ic_launcher_round.png",
-        "backgrundColor":"#ffffff"
-      }
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/splash.png",
+        "backgroundColor": "#161622"
+      },
+      "package": "com.anonymous.Tora"
     },
-    "web":{
-      "favicon":"./assets/icon/web/favicon.png"
+    "web": {
+      "favicon": "./assets/icon/web/favicon.png"
     },
-    "assetBundlePatterns":[
+    "assetBundlePatterns": [
       "**/*"
     ]
   }
