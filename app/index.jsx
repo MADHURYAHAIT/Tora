@@ -32,25 +32,28 @@ export default function Page() {
             resizeMode="contain"
           />
         
-          <Text className="b-6 font-pbold mx-4 text-white text-2xl text-center">
+          <Text className="b-6 font-pbold mx-5  text-white text-2xl text-center">
             Endless Possibilities 
             & The Quest to find real content ends with 
             <Text className="text-secondary-200"> Tora</Text>
           </Text>
 
-          <Text className="text-sm font-pregular text-gray-100 mt-5 text-center mb-5">
-            Join a new world of joy
+          <Text className="text-sm font-pregular text-gray-100 mt-5 text-center py-3 mb-5">
+          Unleash the potential of AI in every share, creating a community driven by curiosity and powered by intelligence.
           </Text>
-
-          <CustomButton 
-            title="Continue with Email"
-            handlePress={()=>{}}
-            containerStyle="w-full wt-7"
-          />
-
+         
+            <CustomButton 
+              title="Continue with Email"
+              handlePress={()=>router.push('/sign-in')}
+              containerStyles='mx-7  w-[95%]'
+            />
          </View>
 
-       
+        
+
+        
+
+         {/* <StatusBar backgroundColor="#161622" style="light"/> */}
 
     </ScrollView>
     </SafeAreaView>

@@ -20,13 +20,17 @@ const Rootlayout = () => {
   useEffect(()=>{
 
     if(error) throw error;
-    if(fontsLoaded) SplashScreen.hideAsync();
+    setTimeout(()=>{
+      if(fontsLoaded) SplashScreen.hideAsync();
+    },2000);
+    
   },[fontsLoaded,error])
 
   if(!fontsLoaded && !error) return null ;
   return (
     <Stack>
       <Stack.Screen name="index" options={{ headerShown:false}}/>
+      <Stack.Screen name="(auth)" options={{ headerShown:false}}/>
     </Stack>
     
   )

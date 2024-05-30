@@ -1,4 +1,4 @@
 import icons from "./icons";
-import images from "./images";
+import images from "./imagess";
 
 export { icons, images };
