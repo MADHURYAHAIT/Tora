@@ -3,9 +3,9 @@ import React from 'react'
 
 const Home = () => {
   return (
-    <View>
+    <View className="bg-primary w-full flex justify-center items-center h-full px-4">
         
-      <Text>Home</Text>
+      <Text className="text-white font-plight  align-middle">Profile wale page me jao Ishi ! No cheating please hehe :</Text>
     </View>
   )
 }

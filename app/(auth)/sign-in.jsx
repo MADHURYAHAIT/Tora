@@ -1,10 +1,11 @@
-import { View, Text ,Image,ScrollView} from 'react-native'
+import { View, Text ,Image,ScrollView,Alert} from 'react-native'
 import React,{useState} from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import {images} from '../../constants/'
 import FormField from '../../components/FormField'
 import CustomButton from '../../components/CustomButton'
-import { Link } from 'expo-router'
+import { Link,router } from 'expo-router'
+import { signIn } from '../../lib/appwrite'
 
 const SignIn = () => {
   const[form,setForm]=useState({
@@ -13,15 +14,27 @@ const SignIn = () => {
   })
 
   const [isSubmitting, setIsSubmitting]=useState(false)
-  const Submit =()=>{
+  const Submit = async()=>{
+    if (!form.email || !form.password ){
+      Alert.alert('Error','Please fill in the fields')
+    }
+    setIsSubmitting(true);
+    try{
+      await signIn(form.email, form.password)
+      router.replace('/home')
 
+    }catch(error){
+      Alert.alert('Error',error.message)
+    }finally{
+      setIsSubmitting(false)
+    }
   }
   return (
     <SafeAreaView className="bg-primary h-full">
       <ScrollView>
         <View className="w-full justify-center min-h-[95vh]  px-6  my-6">
           <Image source={images.logo} className="w-[110px] h-[50px]" resizeMode="contain" />
-          <Text className='text-2xl text-white text-semibold mt-8 font-psemibold'>Log in to Tora</Text>
+          <Text className='text-2xl text-white text-semibold mt-8 font-psemibold'>Log in to Tora ✨</Text>
 
           <FormField
           title="Email"
