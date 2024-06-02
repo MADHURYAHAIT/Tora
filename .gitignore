@@ -9,6 +9,7 @@ dist/
 web-build/
 
 lib
+igg.mp4
 # Native
 *.orig.*
 *.jks
