@@ -9,15 +9,25 @@ import * as DocumentPicker from "expo-document-picker";
 import { createVideo } from '../../lib/appwrite'
 import { useGlobalContext } from '../../context/GlobalProvider'
 import { Link,router } from 'expo-router'
+import * as ImagePicker from 'expo-image-picker'
 
 const Create = () => {
-  const {user} =useGlobalContext();
+  const {user} =useGlobalContext(); 
   const openPicker = async (selectType) => {
-    const result = await DocumentPicker.getDocumentAsync({
-      type:selectType === "image"
-          ? ["image/png", "image/jpeg"]
-          : ["video/mp4", "video/gif"]
+
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: selectType==='image'?
+      ImagePicker.MediaTypeOptions.Images : ImagePicker.MediaTypeOptions.Videos,
+      aspect:[4,3],
+      quality:1,
     });
+
+
+    // const result = await DocumentPicker.getDocumentAsync({
+    //   type:selectType === "image"
+    //       ? ["image/png", "image/jpeg"]
+    //       : ["video/mp4", "video/gif"]
+    // });
     if (!result.canceled) {
       if (selectType === "image") {
         setForm({
