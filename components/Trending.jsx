@@ -20,7 +20,7 @@ const zoomOut={
     scale:0.9,
   }
 }
-
+// console.log(video);
 const TrendingItem =({activeItem,item})=>{
   const [play, setPlay] = useState(false);
 
