@@ -6,6 +6,7 @@ import { icons } from "../constants";
 
 const SearchInput = ({ initialQuery }) => {
   const pathname = usePathname();
+  
   const [query, setQuery] = useState(initialQuery || "");
 
   return (
