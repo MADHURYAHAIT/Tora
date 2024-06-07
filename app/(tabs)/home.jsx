@@ -8,12 +8,12 @@ import EmptyState from '../../components/EmptyState'
 import { getAllPosts, getLatestPosts } from '../../lib/appwrite'
 import useAppwrite from '../../lib/useAppwrite'
 import VideoCard from '../../components/VideoCard'
-
+import { useGlobalContext } from '../../context/GlobalProvider'
 
 const Home = () => {
   const { data: posts, refetch } = useAppwrite(getAllPosts);
   const { data: latestPosts } = useAppwrite(getLatestPosts);
-
+  const { user, setUser, setIsLogged } = useGlobalContext();
 
   const [refreshing, setRefreshing] = useState(false);
 
@@ -42,10 +42,10 @@ const Home = () => {
             <View className="justify-between items-start flex-row mb-3">
               <View>
                 <Text className="font-pmedium text-lg text-gray-400">
-                  Welcome Back
+                  Welcome back,
                 </Text>
                 <Text className="font-psemibold  text-3xl text-gray-100">
-                  Madhurya Hait
+                 {user?.username}
                 </Text>
               </View>
               <View className="">
