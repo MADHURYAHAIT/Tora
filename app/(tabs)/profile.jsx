@@ -1,10 +1,10 @@
 import { router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { View, Image, FlatList, TouchableOpacity } from "react-native";
+import { View, Image, FlatList, TouchableOpacity, Alert } from "react-native";
 
 import { icons } from "../../constants";
 import useAppwrite from "../../lib/useAppwrite";
-import { getUserProf, signOut } from "../../lib/appwrite";
+import { getUserProf, signOut,deleteVideo } from "../../lib/appwrite";
 import { useGlobalContext } from "../../context/GlobalProvider";
 
 import EmptyState from "../../components/EmptyState";
@@ -12,9 +12,26 @@ import   VideoCard  from "../../components/VideoCard";
 import  InfoBox from "../../components/InfoBox";
 
 
+
 const Profile = () => {
   const { user, setUser, setIsLogged } = useGlobalContext();
-  const { data: posts } = useAppwrite(() => getUserProf(user.$id));
+  const { data: posts , refetch  } = useAppwrite(() => getUserProf(user.$id));
+  
+  const handleDeleteVideo = async (videoId) => {
+    console.log(videoId);
+    try {
+      await deleteVideo(videoId);
+      Alert.alert('Video deleted successfully !')
+      // Refresh the posts data
+      await refetch();
+      // useAppwrite(() => getUserProf(user.$id));
+
+    } catch (error) {
+      console.error(error);
+      Alert.alert('Error',error.message)
+
+    }
+  };
 
   const logout = async () => {
     await signOut();
@@ -26,6 +43,7 @@ const Profile = () => {
 
   return (
     <SafeAreaView className="bg-primary h-full">
+
       <FlatList
         data={posts}
         keyExtractor={(item) => item.$id}
@@ -36,6 +54,7 @@ const Profile = () => {
             video={item.video}
             creator={item.creator.username}
             avatar={item.creator.avatar}
+            onDelete={() => handleDeleteVideo(item.$id)}
           />
         )}
         ListEmptyComponent={() => (
@@ -108,7 +127,9 @@ const Profile = () => {
         </View>
       )}
     />
+
   </SafeAreaView>
+
 );
 
 };
