@@ -1,7 +1,6 @@
 import { router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { View, Image, FlatList, TouchableOpacity, Alert } from "react-native";
-
 import { icons } from "../../constants";
 import useAppwrite from "../../lib/useAppwrite";
 import { getUserProf, signOut,deleteVideo } from "../../lib/appwrite";
@@ -24,7 +23,6 @@ const Profile = () => {
       Alert.alert('Video deleted successfully !')
       // Refresh the posts data
       await refetch();
-      // useAppwrite(() => getUserProf(user.$id));
 
     } catch (error) {
       console.error(error);
@@ -70,7 +68,7 @@ const Profile = () => {
               className="flex w-full items-end mb-10"
             >
               <Image
-                source={icons.logout}
+                source={icons.settings}
                 resizeMode="contain"
                 className="w-6 h-6"
               />
