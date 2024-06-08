@@ -1,7 +1,7 @@
 import { router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { View, Image, FlatList, TouchableOpacity, Alert } from "react-native";
-import { icons } from "../../constants";
+import { icons,images } from "../../constants";
 import useAppwrite from "../../lib/useAppwrite";
 import { getUserProf, signOut,deleteVideo } from "../../lib/appwrite";
 import { useGlobalContext } from "../../context/GlobalProvider";
@@ -31,13 +31,6 @@ const Profile = () => {
     }
   };
 
-  const logout = async () => {
-    await signOut();
-    setUser(null);
-    setIsLogged(false);
-
-    router.replace("/sign-in");
-  };
 
   return (
     <SafeAreaView className="bg-primary h-full">
@@ -62,18 +55,36 @@ const Profile = () => {
           />
         )}
         ListHeaderComponent={() => (
-          <View className="w-full flex justify-center items-center mt-6 mb-12 px-4">
-            <TouchableOpacity
-              onPress={logout}
-              className="flex w-full items-end mb-10"
-            >
-              <Image
-                source={icons.settings}
-                resizeMode="contain"
-                className="w-6 h-6"
-              />
-          </TouchableOpacity>
+        
+          <View className="my-6 px-4 space-y-6">
+            
+             <View className="justify-between items-start flex-row">
+             <View>  
+                <Image
+                  source={images.logoSmall} 
+                  className="w-12 h-12"
+                  resizeMode='contain'
+                  />
+              </View>
+             
+
+              <View>
+                <TouchableOpacity
+                    onPress={()=>  router.push("/settings")}
+                    className="flex w-full items-end"
+                  >
+                    <Image
+                      source={icons.settings}
+                      resizeMode="contain"
+                      className="w-10 p-4 h-8"
+                    />
+                </TouchableOpacity>
+              </View>
+              
           
+          </View>
+
+            <View className=" w-full flex justify-center items-center mt-6 mb-12 px-4">
           {user? (
                 <View className="w-16 h-16 border border-secondary rounded-lg flex justify-center items-center"> 
                   <Image
@@ -92,7 +103,7 @@ const Profile = () => {
                   />
                 </View>
               )}
-
+            
               {user? (
                 <>
                 
@@ -110,7 +121,7 @@ const Profile = () => {
                 />
                 <InfoBox
                   title="1.2k"
-                  subtitle="Followers"
+                  subtitle="Likes"
                   titleStyles="text-xl"
                 />
               </View>
@@ -122,6 +133,7 @@ const Profile = () => {
                   titleStyles="text-lg"
                 />
               )}
+            </View>
         </View>
       )}
     />
