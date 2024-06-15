@@ -1,25 +1,21 @@
 import { useEffect, useState } from "react";
 import { router, useLocalSearchParams } from "expo-router";
-import { View, Text, FlatList, ScrollView, TouchableOpacity, Image, Alert } from "react-native";
+import { View, Text, FlatList, ScrollView, TouchableOpacity, Image, Alert, Settings } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import useAppwrite from "../../lib/useAppwrite";
 
 import { searchPosts, signOut, updateUsername, updateAvatar, uploadFile, getFilePreview } from "../../lib/appwrite";
-import  SearchInput from "../../components/SearchInput";
-import EmptyState from "../../components/EmptyState";
-import   VideoCard  from "../../components/VideoCard";
 import CustomButton from "../../components/CustomButton";
 import { useGlobalContext } from "../../context/GlobalProvider";
 import FormField from "../../components/FormField";
 import { icons } from "../../constants";
 import * as ImagePicker from 'expo-image-picker'
 
-const Bookmark = () => {
+const Setting = () => {
   const { query } = useLocalSearchParams();
   const { user, setUser, setIsLogged } = useGlobalContext();
   const [form, setForm] = useState({
-    name: '',
     avatar: null,
   });
 
@@ -48,18 +44,27 @@ const Bookmark = () => {
         Alert.alert('Username updated successfully!');
       } else {
         Alert.alert('Error', 'Failed to update username');
-      }
+}
     } catch (error) {
       console.error(error);
     }
   };
 
-  const updateAvatar = async () => {
+  const handlePress = () => {
+    if (form.avatar) {
+      updateAvatar(form.avatar);
+    }
+  };
+
+  const updateAvatar = async (avatar) => {
     try {
-      const uploadedAvatar = await uploadFile(form.avatar, 'image');
-      const avatarUrl = await getFilePreview(uploadedAvatar.$id, 'image');
-      
-      const updatedUser = await updateAvatar(avatarUrl);
+      const uploadedFileUrl = await uploadFile(avatar, 'image');
+      // const url = new URL(uploadedFileUrl);
+      // const filePath = url.pathname.split('/');
+      // const fileId = filePath[filePath.length - 2]; 
+      // console.log(fileId)
+      // const avatarUrl = await getFilePreview(fileId, 'image');
+      const updatedUser = await updateAvatar(uploadedFileUrl);
       if (updatedUser) {
         setUser(updatedUser);
         Alert.alert('Avatar updated successfully!');
@@ -128,7 +133,7 @@ const Bookmark = () => {
           </View>
           <CustomButton
             title="Update Changes"
-            handlePress={updateAvatar}
+            handlePress={handlePress}
             containerStyles="mt-8 mb-3"
           />
 
@@ -147,4 +152,4 @@ const Bookmark = () => {
   );
 };
 
-export default Bookmark;
+export default Setting;

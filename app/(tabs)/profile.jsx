@@ -3,7 +3,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { View, Image, FlatList, TouchableOpacity, Alert } from "react-native";
 import { icons,images } from "../../constants";
 import useAppwrite from "../../lib/useAppwrite";
-import { getUserProf, signOut,deleteVideo } from "../../lib/appwrite";
+import { getUserProf,deleteVideo } from "../../lib/appwrite";
 import { useGlobalContext } from "../../context/GlobalProvider";
 
 import EmptyState from "../../components/EmptyState";
