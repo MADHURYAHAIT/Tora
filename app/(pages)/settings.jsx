@@ -1,11 +1,8 @@
 import { useEffect, useState } from "react";
 import { router, useLocalSearchParams } from "expo-router";
-import { View, Text, FlatList, ScrollView, TouchableOpacity, Image, Alert, Settings } from "react-native";
+import { View, Text, ScrollView, TouchableOpacity, Image, Alert} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
-import useAppwrite from "../../lib/useAppwrite";
-
-import { searchPosts, signOut, updateUsername, updateAvatar, uploadFile, getFilePreview } from "../../lib/appwrite";
+import { signOut, updateUsername, updateAvatar, uploadFile, getFilePreview } from "../../lib/appwrite";
 import CustomButton from "../../components/CustomButton";
 import { useGlobalContext } from "../../context/GlobalProvider";
 import FormField from "../../components/FormField";
@@ -13,11 +10,10 @@ import { icons } from "../../constants";
 import * as ImagePicker from 'expo-image-picker'
 
 const Setting = () => {
-  const { query } = useLocalSearchParams();
+
   const { user, setUser, setIsLogged } = useGlobalContext();
-  const [form, setForm] = useState({
-    avatar: null,
-  });
+
+  const [form, setForm] = useState({ name: '', avatar: null });
 
   const openPicker = async (selectType) => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -26,6 +22,7 @@ const Setting = () => {
       aspect:[4,3],
       quality:1,
     });
+    
     if (!result.canceled) {
       if (selectType === "image") {
         setForm({
@@ -52,19 +49,21 @@ const Setting = () => {
 
   const handlePress = () => {
     if (form.avatar) {
-      updateAvatar(form.avatar);
+      updateAvatarPic(form.avatar);
     }
   };
 
-  const updateAvatar = async (avatar) => {
+  const updateAvatarPic = async (avatar) => {
     try {
       const uploadedFileUrl = await uploadFile(avatar, 'image');
-      // const url = new URL(uploadedFileUrl);
-      // const filePath = url.pathname.split('/');
-      // const fileId = filePath[filePath.length - 2]; 
-      // console.log(fileId)
+      const url = new URL(uploadedFileUrl);
+      const filePath = url.pathname.split('/');
+      const fileId = filePath[filePath.length - 2]; 
+      console.log(fileId)
+
       // const avatarUrl = await getFilePreview(fileId, 'image');
-      const updatedUser = await updateAvatar(uploadedFileUrl);
+
+      const updatedUser = await updateAvatar(url);
       if (updatedUser) {
         setUser(updatedUser);
         Alert.alert('Avatar updated successfully!');
