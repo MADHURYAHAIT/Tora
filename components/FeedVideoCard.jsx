@@ -5,13 +5,20 @@ import { MenuProvider, Menu, MenuTrigger, MenuOptions, MenuOption } from "react-
 
 import { icons } from "../constants";
 
+
+
 const FeedVideoCard = ({ title, creator, avatar, thumbnail, video }) => {
+
+    const like={
+
+    }
+
   const [play, setPlay] = useState(false);
 
   return (
 
       <View className="flex flex-col items-center px-4 mb-14">
-        <View className="flex flex-row gap-3 items-start">
+        <View className="flex flex-row gap-3 mt-1 items-start">
           <View className="flex justify-center items-center flex-row flex-1">
             <View className="w-[46px] h-[46px] rounded-lg border border-secondary flex justify-center items-center p-0.5">
               <Image
@@ -37,23 +44,19 @@ const FeedVideoCard = ({ title, creator, avatar, thumbnail, video }) => {
             </View>
           </View>
 
-          <View className="pt-2">
-            <Menu>
-              <MenuTrigger>
-                <Image source={icons.menu} className="w-5 h-5" resizeMode="contain" />
-              </MenuTrigger>
-              <MenuOptions >
-                <View className='py-5 mx-3'>
+          <View className="flex justify-center items-center flex-row flex-2" >
+            <TouchableOpacity
+              onPress={like}
+              className="">
+                
+                <Image 
+                      source={icons.unheart}
+                      resizeMode="contain"
+                       className="w-14 h-14"
+                    />
 
-                 <MenuOption className='text-center justify-center flex-1 'onSelect={() => console.log("Like button pressed")}>
-                  <Text className='font-psemibold text-sm'>Like</Text>
-                </MenuOption>
-                <MenuOption className='text-center justify-center flex-1 ' onSelect={() => onDelete()}>
-                  <Text className='font-psemibold text-sm'>Remove</Text>
-                </MenuOption>
-                </View>
-              </MenuOptions>
-            </Menu>
+            </TouchableOpacity>
+            
           </View>
         </View>
 

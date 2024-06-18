@@ -12,6 +12,8 @@ import eyeHide from "../assets/appIcons/eye-hide.png";
 import eye from "../assets/appIcons/eye.png";
 import play from "../assets/appIcons/play.png";
 import settings from "../assets/appIcons/setting.png";
+import heart from "../assets/appIcons/heart.png"
+import unheart from "../assets/appIcons/unheart.png"
 
 export default {
   play,
@@ -27,5 +29,7 @@ export default {
   logout,
   eyeHide,
   settings,
+  heart,
+  unheart,
   eye,
 };
