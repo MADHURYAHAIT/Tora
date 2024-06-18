@@ -34,7 +34,7 @@ const Bookmark = () => {
           <>
             <View className="flex my-6 px-4">
 
-              <Text className="text-2xl font-psemibold text-white mt-1">
+            <Text className='text-3xl text-gray-100 mt-2 font-psemibold'>
                 Saved Videos
               </Text>
 
@@ -48,6 +48,7 @@ const Bookmark = () => {
           <EmptyState
             title="No Videos Found"
             subtitle="Go ahead & like a post"
+            buttontxt="Like a Video"
           />
         )}
       />

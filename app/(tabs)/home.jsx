@@ -7,7 +7,7 @@ import Trending from '../../components/Trending'
 import EmptyState from '../../components/EmptyState'
 import { getAllPosts, getLatestPosts } from '../../lib/appwrite'
 import useAppwrite from '../../lib/useAppwrite'
-import VideoCard from '../../components/VideoCard'
+import FeedVideoCard from '../../components/FeedVideoCard'
 import { useGlobalContext } from '../../context/GlobalProvider'
 
 
@@ -33,7 +33,7 @@ const Home = () => {
          data={posts}
          keyExtractor={(item) => item.$id}
         renderItem={({item})=>(
-          <VideoCard
+          <FeedVideoCard
           title={item.title}
           thumbnail={item.thumbnail}
           video={item.video}
@@ -46,7 +46,7 @@ const Home = () => {
             <View className="justify-between items-start flex-row mb-3">
               <View>
                 <Text className="font-pmedium text-lg text-gray-400">
-                  Welcome back,
+                  Welcome back 👋🏻  
                 </Text>
                 <Text className="font-psemibold  text-3xl text-gray-100">
                  {user?.username}
@@ -73,6 +73,7 @@ const Home = () => {
           <EmptyState
           title="No Videos Found"
           subtitle="Be the first to create"
+          buttontxt="Create a Video"
           />
         )}
 

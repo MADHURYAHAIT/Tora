@@ -1,6 +1,6 @@
 import { router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { View, Image, FlatList,RefreshControl, TouchableOpacity, Alert } from "react-native";
+import { View, Image, FlatList,RefreshControl, TouchableOpacity, Alert,Text } from "react-native";
 import { icons,images } from "../../constants";
 import useAppwrite from "../../lib/useAppwrite";
 import { getUserProf,deleteVideo } from "../../lib/appwrite";
@@ -61,19 +61,23 @@ const Profile = () => {
           <EmptyState
             title="No Videos Found"
             subtitle="No videos found for this profile"
+            buttontxt="Create a Video"
           />
         )}
         ListHeaderComponent={() => (
         
           <View className="my-6 px-4 space-y-6">
             
-             <View className="justify-between items-start flex-row">
+             <View className="justify-between items-start pb-5 flex-row">
              <View>  
-                <Image
+                {/* <Image
                   source={images.logoSmall} 
                   className="w-12 h-12"
                   resizeMode='contain'
-                  />
+                  /> */}
+                 <Text className='text-3xl  text-gray-100 mt-2 font-psemibold'>
+                   User Profile
+                </Text>
               </View>
              
 
@@ -82,11 +86,21 @@ const Profile = () => {
                     onPress={()=>  router.push("/settings")}
                     className="flex w-full items-end"
                   >
-                    <Image
+                    {/* <Image 
                       source={icons.settings}
                       resizeMode="contain"
-                      className="w-10 p-4 h-8"
-                    />
+                       className="w-9 invert h-10"
+                    /> */}
+
+                <Text className='text-4xl  text-gray-100 mt-1 font-psemibold'>
+                 ⚙
+                </Text>
+
+              {/* <Image
+                    source={{ uri: user.avatar }}
+                    className="w-9 p-4 h-9  rounded-3xl"
+                    resizeMode="cover"
+                  /> */}
                 </TouchableOpacity>
               </View>
               

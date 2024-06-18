@@ -60,7 +60,7 @@ const Setting = () => {
       const filePath = url.pathname.split('/');
       const fileId = filePath[filePath.length - 2]; 
       console.log(fileId)
-
+      
       // const avatarUrl = await getFilePreview(fileId, 'image');
 
       const updatedUser = await updateAvatar(url);
@@ -86,7 +86,8 @@ const Setting = () => {
     <SafeAreaView className="bg-primary h-full">
       <ScrollView className="flex my-6 px-1">
         <View >
-          <Text className="text-2xl font-psemibold px-2 text-white mt-1">
+
+           <Text className='text-3xl pl-3 text-gray-100 mt-2 font-psemibold'>
             Settings
           </Text>
         </View>
