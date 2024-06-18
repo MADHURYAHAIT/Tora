@@ -1,6 +1,6 @@
 import { router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { View, Image, FlatList, TouchableOpacity, Alert } from "react-native";
+import { View, Image, FlatList,RefreshControl, TouchableOpacity, Alert } from "react-native";
 import { icons,images } from "../../constants";
 import useAppwrite from "../../lib/useAppwrite";
 import { getUserProf,deleteVideo } from "../../lib/appwrite";
@@ -9,6 +9,7 @@ import { useGlobalContext } from "../../context/GlobalProvider";
 import EmptyState from "../../components/EmptyState";
 import   VideoCard  from "../../components/VideoCard";
 import  InfoBox from "../../components/InfoBox";
+import { useState } from "react";
 
 
 
@@ -29,6 +30,14 @@ const Profile = () => {
       Alert.alert('Error',error.message)
 
     }
+  };
+
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await refetch();
+    setRefreshing(false);
   };
 
 
@@ -136,6 +145,7 @@ const Profile = () => {
             </View>
         </View>
       )}
+      refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>}
     />
 
   </SafeAreaView>
