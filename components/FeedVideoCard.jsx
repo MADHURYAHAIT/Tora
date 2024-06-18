@@ -50,7 +50,7 @@ const FeedVideoCard = ({ title, creator, avatar, thumbnail, video }) => {
               className="">
                 
                 <Image 
-                      source={icons.unheart}
+                      source={icons.heart}
                       resizeMode="contain"
                        className="w-14 h-14"
                     />
