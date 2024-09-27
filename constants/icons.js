@@ -11,7 +11,7 @@ import logout from "../assets/appIcons/logout.png";
 import eyeHide from "../assets/appIcons/eye-hide.png";
 import eye from "../assets/appIcons/eye.png";
 import play from "../assets/appIcons/play.png";
-import settings from "../assets/appIcons/setting.png";
+import setting from "../assets/appIcons/setting.png"
 import heart from "../assets/appIcons/heart.png"
 import unheart from "../assets/appIcons/unheart.png"
 
@@ -28,7 +28,7 @@ export default {
   rightArrow,
   logout,
   eyeHide,
-  settings,
+  setting,
   heart,
   unheart,
   eye,

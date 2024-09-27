@@ -82,19 +82,20 @@ const Profile = () => {
              
 
               <View>
-                <TouchableOpacity
+              <TouchableOpacity
                     onPress={()=>  router.push("/settings")}
                     className="flex w-full items-end"
                   >
-                    {/* <Image 
-                      source={icons.settings}
+                  <Image 
+                      source={icons.setting}
                       resizeMode="contain"
-                       className="w-9 invert h-10"
-                    /> */}
+                      className="w-9 h-8"
+                      tintColor="#CDCDE0" // change the color to red
+                    />
 
-                <Text className='text-4xl  text-gray-100 mt-1 font-psemibold'>
+                {/* <Text className='text-4xl  text-gray-100 mt-1 font-psemibold'>
                  ⚙
-                </Text>
+                </Text> */}
 
               {/* <Image
                     source={{ uri: user.avatar }}
