@@ -45,10 +45,10 @@ const Home = () => {
           <View className="my-6 px-4 space-y-6">
             <View className="justify-between items-start flex-row mb-3">
               <View>
-                <Text className="font-pmedium text-lg text-gray-400">
+                <Text className="font-pmedium text-md text-gray-400">
                   Welcome back 👋🏻  
                 </Text>
-                <Text className="font-psemibold  text-3xl text-gray-100">
+                <Text className="font-psemibold  text-2xl text-gray-100">
                  {user?.username}
                 </Text>
               </View>

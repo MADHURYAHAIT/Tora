@@ -3,6 +3,7 @@ import { router, useLocalSearchParams } from "expo-router";
 import { View, Text, ScrollView, TouchableOpacity, Image, Alert} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { signOut, updateUsername, updateAvatar, uploadFile, getFilePreview } from "../../lib/appwrite";
+import LogoutButton from "../../components/LogoutButton";
 import CustomButton from "../../components/CustomButton";
 import { useGlobalContext } from "../../context/GlobalProvider";
 import FormField from "../../components/FormField";
@@ -137,11 +138,11 @@ const Setting = () => {
             containerStyles="mt-8 mb-3"
           />
 
-          <Text className="text-base mt-20  text-gray-100 font-pmedium">
+          <Text className="text-base mt-10  text-gray-100 font-pmedium">
             Come Back later ?           
           </Text>
 
-          <CustomButton
+          <LogoutButton
             title={'Logout'}
             handlePress={logout}
             containerStyles='mt-6'

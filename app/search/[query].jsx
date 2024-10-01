@@ -48,6 +48,7 @@ const Search = () => {
         )}
         ListEmptyComponent={() => (
           <EmptyState
+            buttontxt="Be the First one to Create"
             title="No Videos Found"
             subtitle="No videos found for this search query"
           />
