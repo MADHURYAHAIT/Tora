@@ -7,17 +7,18 @@ import useAppwrite from "../../lib/useAppwrite";
 import { searchPosts } from "../../lib/appwrite";
 import SearchInput from "../../components/SearchInput";
 import EmptyState from "../../components/EmptyState";
-import VideoCard from "../../components/VideoCard";
-import { useContext } from "react";
-import { GlobalProvider } from "../../context/GlobalProvider";
+import FeedVideoCard from "../../components/FeedVideoCard";
+import { useGlobalContext } from "../../context/GlobalProvider";
 
 const Bookmark = () => {
-  const { user } = useContext(GlobalProvider);
+  const { user } = useGlobalContext();
   const [bookmarkedVideos, setBookmarkedVideos] = useState([]);
+
 
   const fetchBookmarkedVideos = async () => {
     try {
-      const response = await useAppwrite(() => getBookmarkedVideos(user.$id));
+      const { data: response } = useAppwrite(getBookmarkedVideos(user.$id));
+  
       setBookmarkedVideos(response);
     } catch (error) {
       console.log(error);
@@ -34,7 +35,8 @@ const Bookmark = () => {
         data={bookmarkedVideos}
         keyExtractor={(item) => item.$id}
         renderItem={({ item }) => (
-          <VideoCard
+          <FeedVideoCard
+            user={user}
             title={item.title}
             thumbnail={item.thumbnail}
             video={item.video}

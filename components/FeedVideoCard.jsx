@@ -1,34 +1,35 @@
-
-
+// FeedVideoCard.jsx
 import { useState } from "react";
 import { ResizeMode, Video } from "expo-av";
 import { View, Text, TouchableOpacity, Image } from "react-native";
 import { MenuProvider, Menu, MenuTrigger, MenuOptions, MenuOption } from "react-native-popup-menu";
 import { icons } from "../constants";
 
-import { useGlobalContext } from "../context/GlobalProvider";
 import { useAppwrite } from "../lib/useAppwrite";
 import { addBookmark, removeBookmark } from "../lib/appwrite";
-
- 
+import { useGlobalContext } from "../context/GlobalProvider";
 
 const FeedVideoCard = ({ title, creator, avatar, thumbnail, video }) => {
-
-    const { user } = useGlobalContext();
+  const { user, isLogged } = useGlobalContext();
   const [isBookmarked, setIsBookmarked] = useState(false);
 
   const handleBookmark = async () => {
-    try {
-      if (isBookmarked) {
-        await removeBookmark(user.$id, video);
-      } else {
-        await addBookmark(user.$id, video);
+    if (isLogged) {
+      try {
+        if (isBookmarked) {
+          await removeBookmark(user.$id, video);
+        } else {
+          await addBookmark(user.$id, video);
+        }
+        setIsBookmarked(!isBookmarked);
+      } catch (error) {
+        console.log(error);
       }
-      setIsBookmarked(!isBookmarked);
-    } catch (error) {
-      console.log(error);
+    } else {
+      console.log("User is not logged in");
     }
-  }
+  };
+
   const [play, setPlay] = useState(false);
 
   return (
