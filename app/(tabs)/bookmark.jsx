@@ -1,25 +1,36 @@
-import { useEffect } from "react";
+// bookmark.jsx
+import { useEffect, useState } from "react";
 import { useLocalSearchParams } from "expo-router";
 import { View, Text, FlatList } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
 import useAppwrite from "../../lib/useAppwrite";
 import { searchPosts } from "../../lib/appwrite";
-import  SearchInput from "../../components/SearchInput";
+import SearchInput from "../../components/SearchInput";
 import EmptyState from "../../components/EmptyState";
-import   VideoCard  from "../../components/VideoCard";
+import VideoCard from "../../components/VideoCard";
+import { useGlobalContext } from "../../context/GlobalProvider";
+
 const Bookmark = () => {
-  const { query } = useLocalSearchParams();
-  // const { data: posts, refetch } = useAppwrite(() => searchPosts(query));
-  // useEffect(() => {
-    //   refetch();
-    // }, [query]);
-    let posts=null;
-    
+  const { user } = useGlobalContext();
+  const [bookmarkedVideos, setBookmarkedVideos] = useState([]);
+
+  const fetchBookmarkedVideos = async () => {
+    try {
+      const response = await useAppwrite(() => getBookmarkedVideos(user.$id));
+      setBookmarkedVideos(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchBookmarkedVideos();
+  }, []);
+
   return (
     <SafeAreaView className="bg-primary h-full">
       <FlatList
-        data={posts}
+        data={bookmarkedVideos}
         keyExtractor={(item) => item.$id}
         renderItem={({ item }) => (
           <VideoCard
@@ -33,14 +44,9 @@ const Bookmark = () => {
         ListHeaderComponent={() => (
           <>
             <View className="flex my-6 px-4">
-
-            <Text className='text-3xl text-gray-100 mt-2 font-psemibold'>
+              <Text className="text-3xl text-gray-100 mt-2 font-psemibold">
                 Saved Videos
               </Text>
-
-              {/* <View className="mt-6 mb-8">
-                <SearchInput initialQuery={query} refetch={refetch} />
-              </View> */}
             </View>
           </>
         )}
@@ -48,7 +54,7 @@ const Bookmark = () => {
           <EmptyState
             title="No Videos Found"
             subtitle="Go ahead & like a post"
-            buttontxt="Like a Video"
+            buttontxt="Add A Bookmark Now"
           />
         )}
       />

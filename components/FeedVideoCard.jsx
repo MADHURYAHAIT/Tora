@@ -1,18 +1,34 @@
+
+
 import { useState } from "react";
 import { ResizeMode, Video } from "expo-av";
 import { View, Text, TouchableOpacity, Image } from "react-native";
 import { MenuProvider, Menu, MenuTrigger, MenuOptions, MenuOption } from "react-native-popup-menu";
-
 import { icons } from "../constants";
 
+import { useGlobalContext } from "../context/GlobalProvider";
+import { useAppwrite } from "../lib/useAppwrite";
+import { addBookmark, removeBookmark } from "../lib/appwrite";
 
+ 
 
 const FeedVideoCard = ({ title, creator, avatar, thumbnail, video }) => {
 
-    const like={
+    const { user } = useGlobalContext();
+  const [isBookmarked, setIsBookmarked] = useState(false);
 
+  const handleBookmark = async () => {
+    try {
+      if (isBookmarked) {
+        await removeBookmark(user.$id, video);
+      } else {
+        await addBookmark(user.$id, video);
+      }
+      setIsBookmarked(!isBookmarked);
+    } catch (error) {
+      console.log(error);
     }
-
+  }
   const [play, setPlay] = useState(false);
 
   return (
@@ -46,14 +62,14 @@ const FeedVideoCard = ({ title, creator, avatar, thumbnail, video }) => {
 
           <View className="flex justify-center items-center flex-row flex-2" >
             <TouchableOpacity
-              onPress={like}
+              onPress={handleBookmark}
               className="">
                 
-                <Image 
-                      source={icons.heart}
-                      resizeMode="contain"
-                       className="w-14 h-14"
-                    />
+                <Image
+                  source={isBookmarked ? icons.heart : icons.bookmark}
+                  resizeMode="contain"
+                  className="w-10 h-8"
+                />
 
             </TouchableOpacity>
             
