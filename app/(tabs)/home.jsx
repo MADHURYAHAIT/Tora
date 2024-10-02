@@ -38,7 +38,9 @@ const Home = () => {
           thumbnail={item.thumbnail}
           video={item.video}
           creator={item.creator.username}
-          avatar={item.creator.avatar}/>
+          avatar={item.creator.avatar}
+          id={item.$id}
+          />
           )}
         
         ListHeaderComponent={()=>(

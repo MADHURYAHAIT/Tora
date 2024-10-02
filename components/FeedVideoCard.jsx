@@ -9,17 +9,26 @@ import { useAppwrite } from "../lib/useAppwrite";
 import { addBookmark, removeBookmark } from "../lib/appwrite";
 import { useGlobalContext } from "../context/GlobalProvider";
 
-const FeedVideoCard = ({ title, creator, avatar, thumbnail, video }) => {
+const FeedVideoCard = ({ title, creator, avatar, thumbnail, id }) => {
   const { user, isLogged } = useGlobalContext();
   const [isBookmarked, setIsBookmarked] = useState(false);
+
+  const extractVideoId = (videoUrl) => {
+    const urlParts = videoUrl.split('/');
+    const videoId = urlParts[8]; // Extract the fileId from the URL
+    return videoId;
+  };
+
+  // Extract the video ID
+  const videoId = id;
 
   const handleBookmark = async () => {
     if (isLogged) {
       try {
         if (isBookmarked) {
-          await removeBookmark(user.$id, video);
+          await removeBookmark(user.$id, videoId);
         } else {
-          await addBookmark(user.$id, video);
+          await addBookmark(user.$id, videoId);
         }
         setIsBookmarked(!isBookmarked);
       } catch (error) {

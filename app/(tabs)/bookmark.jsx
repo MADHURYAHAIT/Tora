@@ -36,8 +36,9 @@ const Bookmark = () => {
             title={item.title}
             thumbnail={item.thumbnail}
             video={item.video}
-            creator={item.users.username} // Ensure "users" is structured correctly.
-            avatar={item.users.avatar}
+            creator={item.creator.username} // Access the creator property correctly
+            avatar={item.creator.avatar}
+            id={item.$id}
           />
         )}
         ListHeaderComponent={() => (
@@ -50,7 +51,7 @@ const Bookmark = () => {
           </>
         )}
         ListEmptyComponent={() => (
-          <EmptyState
+ <EmptyState
             title="No Videos Found"
             subtitle="Go ahead & like a post"
             buttontxt="Add A Bookmark Now"
