@@ -1,7 +1,7 @@
 // bookmark.jsx
 import { useEffect, useState } from "react";
 import { useLocalSearchParams } from "expo-router";
-import { View, Text, FlatList } from "react-native";
+import { View, Text, FlatList, RefreshControl } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import useAppwrite from "../../lib/useAppwrite";
 import { getBookmarkedVideos } from "../../lib/appwrite";
@@ -13,6 +13,13 @@ import { useGlobalContext } from "../../context/GlobalProvider";
 const Bookmark = () => {
   const { user } = useGlobalContext();
   const { data: bookmarkedVideos, loading, refetch } = useAppwrite(() => getBookmarkedVideos({ equals: user.$id }));
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await refetch();
+    setRefreshing(false);
+  };
 
   useEffect(() => {
     refetch();
@@ -32,7 +39,6 @@ const Bookmark = () => {
             creator={item.users.username} // Ensure "users" is structured correctly.
             avatar={item.users.avatar}
           />
-
         )}
         ListHeaderComponent={() => (
           <>
@@ -50,6 +56,7 @@ const Bookmark = () => {
             buttontxt="Add A Bookmark Now"
           />
         )}
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
       />
     </SafeAreaView>
   );
