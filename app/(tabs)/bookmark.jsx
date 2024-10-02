@@ -4,7 +4,7 @@ import { useLocalSearchParams } from "expo-router";
 import { View, Text, FlatList } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import useAppwrite from "../../lib/useAppwrite";
-import { searchPosts } from "../../lib/appwrite";
+import { getBookmarkedVideos } from "../../lib/appwrite";
 import SearchInput from "../../components/SearchInput";
 import EmptyState from "../../components/EmptyState";
 import FeedVideoCard from "../../components/FeedVideoCard";
@@ -12,22 +12,11 @@ import { useGlobalContext } from "../../context/GlobalProvider";
 
 const Bookmark = () => {
   const { user } = useGlobalContext();
-  const [bookmarkedVideos, setBookmarkedVideos] = useState([]);
-
-
-  const fetchBookmarkedVideos = async () => {
-    try {
-      const { data: response } = useAppwrite(getBookmarkedVideos(user.$id));
-  
-      setBookmarkedVideos(response);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const { data: bookmarkedVideos, loading, refetch } = useAppwrite(() => getBookmarkedVideos({ equals: user.$id }));
 
   useEffect(() => {
-    fetchBookmarkedVideos();
-  }, []);
+    refetch();
+  }, [user]);
 
   return (
     <SafeAreaView className="bg-primary h-full">
@@ -40,9 +29,10 @@ const Bookmark = () => {
             title={item.title}
             thumbnail={item.thumbnail}
             video={item.video}
-            creator={item.users.username}
+            creator={item.users.username} // Ensure "users" is structured correctly.
             avatar={item.users.avatar}
           />
+
         )}
         ListHeaderComponent={() => (
           <>
