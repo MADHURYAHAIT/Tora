@@ -8,10 +8,11 @@ import { searchPosts } from "../../lib/appwrite";
 import SearchInput from "../../components/SearchInput";
 import EmptyState from "../../components/EmptyState";
 import VideoCard from "../../components/VideoCard";
-import { useGlobalContext } from "../../context/GlobalProvider";
+import { useContext } from "react";
+import { GlobalProvider } from "../../context/GlobalProvider";
 
 const Bookmark = () => {
-  const { user } = useGlobalContext();
+  const { user } = useContext(GlobalProvider);
   const [bookmarkedVideos, setBookmarkedVideos] = useState([]);
 
   const fetchBookmarkedVideos = async () => {
