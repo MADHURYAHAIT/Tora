@@ -13,12 +13,6 @@ const FeedVideoCard = ({ title, creator, video,avatar, thumbnail, id }) => {
   const { user, isLogged } = useGlobalContext();
   const [isBookmarked, setIsBookmarked] = useState(false);
 
-  const extractVideoId = (videoUrl) => {
-    const urlParts = videoUrl.split('/');
-    const videoId = urlParts[8]; // Extract the fileId from the URL
-    return videoId;
-  };
-
   // Extract the video ID
   const videoId = id;
 
