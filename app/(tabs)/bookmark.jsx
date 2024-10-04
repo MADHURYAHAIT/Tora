@@ -25,7 +25,7 @@ const Bookmark = () => {
     refetch();
   }, [user]);
 
-  console.log("bookmarkedVideos:", bookmarkedVideos);
+  //console.log("bookmarkedVideos:", bookmarkedVideos);
 
   return (
     <SafeAreaView className="bg-primary h-full">
@@ -33,7 +33,7 @@ const Bookmark = () => {
         data={bookmarkedVideos}
         keyExtractor={(item) => item.$id}
         renderItem={({ item }) => {
-          console.log("item:", item);
+          //console.log("item:", item);
           return (
             <FeedVideoCard
               user={user}

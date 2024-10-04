@@ -1,12 +1,12 @@
 // FeedVideoCard.jsx
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { ResizeMode, Video } from "expo-av";
 import { View, Text, TouchableOpacity, Image } from "react-native";
 import { MenuProvider, Menu, MenuTrigger, MenuOptions, MenuOption } from "react-native-popup-menu";
 import { icons } from "../constants";
 
 import { useAppwrite } from "../lib/useAppwrite";
-import { addBookmark, removeBookmark } from "../lib/appwrite";
+import { addBookmark, removeBookmark,getBookmarks  } from "../lib/appwrite";
 import { useGlobalContext } from "../context/GlobalProvider";
 
 const FeedVideoCard = ({ title, creator, video,avatar, thumbnail, id }) => {
@@ -15,6 +15,16 @@ const FeedVideoCard = ({ title, creator, video,avatar, thumbnail, id }) => {
 
   // Extract the video ID
   const videoId = id;
+
+  
+useEffect(() => {
+  if (isLogged) {
+    getBookmarks(user.$id).then((bookmarks) => {
+      const bookmarkedVideoIds = bookmarks.map((bookmark) => bookmark.videos.$id);
+      setIsBookmarked(bookmarkedVideoIds.includes(videoId));
+    });
+  }
+}, [user, isLogged]);
 
   const handleBookmark = async () => {
     if (isLogged) {
