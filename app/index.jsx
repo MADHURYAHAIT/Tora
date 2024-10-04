@@ -54,10 +54,6 @@ export default function Page() {
             />
          </View>
 
-        
-
-        
-
          {/* <StatusBar backgroundColor="#161622" style="light"/> */}
 
     </ScrollView>
