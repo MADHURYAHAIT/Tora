@@ -25,22 +25,27 @@ const Bookmark = () => {
     refetch();
   }, [user]);
 
+  console.log("bookmarkedVideos:", bookmarkedVideos);
+
   return (
     <SafeAreaView className="bg-primary h-full">
       <FlatList
         data={bookmarkedVideos}
         keyExtractor={(item) => item.$id}
-        renderItem={({ item }) => (
-          <FeedVideoCard
-            user={user}
-            title={item.title}
-            thumbnail={item.thumbnail}
-            video={item.video}
-            creator={item.creator.username} // Access the creator property correctly
-            avatar={item.creator.avatar}
-            id={item.$id}
-          />
-        )}
+        renderItem={({ item }) => {
+          console.log("item:", item);
+          return (
+            <FeedVideoCard
+              user={user}
+              title={item.videos.title}
+              thumbnail={item.videos.thumbnail}
+              video={item.videos.video}
+              creator={item.videos.creator.username}
+              avatar={item.videos.creator.avatar}
+              id={item.$id}
+            />
+          );
+        }}
         ListHeaderComponent={() => (
           <>
             <View className="flex my-6 px-4">
@@ -51,7 +56,7 @@ const Bookmark = () => {
           </>
         )}
         ListEmptyComponent={() => (
- <EmptyState
+          <EmptyState
             title="No Videos Found"
             subtitle="Go ahead & like a post"
             buttontxt="Add A Bookmark Now"

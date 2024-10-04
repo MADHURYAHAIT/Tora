@@ -9,7 +9,7 @@ import { useAppwrite } from "../lib/useAppwrite";
 import { addBookmark, removeBookmark } from "../lib/appwrite";
 import { useGlobalContext } from "../context/GlobalProvider";
 
-const FeedVideoCard = ({ title, creator, avatar, thumbnail, id }) => {
+const FeedVideoCard = ({ title, creator, video,avatar, thumbnail, id }) => {
   const { user, isLogged } = useGlobalContext();
   const [isBookmarked, setIsBookmarked] = useState(false);
 
