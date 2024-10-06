@@ -50,7 +50,7 @@ const Bookmark = () => {
           <EmptyState
             title="No Videos Found"
             subtitle="Go ahead & like a post"
-            buttontxt="Add A Bookmark Now"
+            buttontxt="Add a Bookmark Now"
           />
         )}
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
