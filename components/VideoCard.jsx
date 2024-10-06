@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ResizeMode, Video } from "expo-av";
-import { View, Text, TouchableOpacity, Image } from "react-native";
+import { View, Text, TouchableOpacity, Image,Alert } from "react-native";
 import { MenuProvider, Menu, MenuTrigger, MenuOptions, MenuOption } from "react-native-popup-menu";
 
 import { icons } from "../constants";
@@ -45,11 +45,11 @@ const VideoCard = ({ title, creator, avatar, thumbnail, video, onDelete }) => {
               <MenuOptions >
                 <View className='py-5 mx-3'>
 
-                 <MenuOption className='text-center justify-center flex-1 'onSelect={() => console.log("Like button pressed")}>
-                  <Text className='font-psemibold text-sm'>Like</Text>
+                 <MenuOption className='text-center flex flex-col items-center pb-2 justify-center  'onSelect={() => Alert.alert("This feature is coming soon ...")}>
+                  <Text className='font-psemibold text-sm'>Promote 📢</Text>
                 </MenuOption>
-                <MenuOption className='text-center justify-center flex-1 ' onSelect={() => onDelete()}>
-                  <Text className='font-psemibold text-sm'>Delete</Text>
+                <MenuOption className='text-center justify-center flex flex-col pt-2 items-center  ' onSelect={() => onDelete()}>
+                  <Text className='font-psemibold text-sm'>Delete ❌</Text>
                 </MenuOption>
                 </View>
               </MenuOptions>

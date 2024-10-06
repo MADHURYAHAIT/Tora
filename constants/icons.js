@@ -14,6 +14,8 @@ import play from "../assets/appIcons/play.png";
 import setting from "../assets/appIcons/setting.png"
 import heart from "../assets/appIcons/heart.png"
 import unheart from "../assets/appIcons/unheart.png"
+import booked from "../assets/appIcons/booked.png"
+import unbooked from "../assets/appIcons/unbooked.png"
 
 export default {
   play,
@@ -30,6 +32,8 @@ export default {
   eyeHide,
   setting,
   heart,
+  booked,
+  unbooked,
   unheart,
   eye,
 };

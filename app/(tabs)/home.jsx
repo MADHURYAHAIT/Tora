@@ -1,20 +1,19 @@
-// home.js
-import { View, Text, FlatList, Image, RefreshControl, Alert } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import { images } from '../../constants'
-import SearchInput from '../../components/SearchInput'
-import Trending from '../../components/Trending'
-import EmptyState from '../../components/EmptyState'
-import { getAllPosts, getLatestPosts } from '../../lib/appwrite'
-import useAppwrite from '../../lib/useAppwrite'
-import FeedVideoCard from '../../components/FeedVideoCard'
-import { useGlobalContext } from '../../context/GlobalProvider'
+import { View, Text, FlatList, Image, RefreshControl, Alert } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { images } from '../../constants';
+import SearchInput from '../../components/SearchInput';
+import Trending from '../../components/Trending';
+import EmptyState from '../../components/EmptyState';
+import { getAllPosts, getLatestPosts } from '../../lib/appwrite';
+import useAppwrite from '../../lib/useAppwrite';
+import FeedVideoCard from '../../components/FeedVideoCard';
+import { useGlobalContext } from '../../context/GlobalProvider';
 
 const Home = () => {
-  const { data: posts, refetch } = useAppwrite(() => getAllPosts(user.$id));
+  const { user, isLogged } = useGlobalContext();
+  const { data: posts, refetch } = useAppwrite(() => getAllPosts(user?.$id)); // Ensure user exists before calling
   const { data: latestPosts } = useAppwrite(getLatestPosts);
-  const { user, setUser, isLogged } = useGlobalContext();
 
   const [refreshing, setRefreshing] = useState(false);
 
@@ -25,7 +24,9 @@ const Home = () => {
   };
 
   useEffect(() => {
-    refetch();
+    if (user) {
+      refetch(); // Only refetch when user is logged in
+    }
   }, [user]);
 
   return (
@@ -34,7 +35,6 @@ const Home = () => {
         data={posts}
         keyExtractor={(item) => item.$id}
         renderItem={({ item }) => (
-        
           <FeedVideoCard
             title={item.title}
             thumbnail={item.thumbnail}
@@ -42,8 +42,8 @@ const Home = () => {
             creator={item.creator.username}
             avatar={item.creator.avatar}
             id={item.$id}
-            isBookmark={item.isBookmarked}
-            tab={'home'}
+            isBookmark={item.isBookmarked} // Pass bookmark status
+            tab={'home'} // Keep the tab functionality
           />
         )}
         ListHeaderComponent={() => (
@@ -67,7 +67,7 @@ const Home = () => {
             </View>
             <SearchInput/>
             <View className="w-full flex-1 pt-5 pb-8">
-              <Text className="text-gray-100 font-preg ul ar mb-3 text-lg">
+              <Text className="text-gray-100 font-pregular mb-3 text-lg">
                 Latest Videos
               </Text>
               <Trending post={latestPosts}/>
@@ -81,10 +81,10 @@ const Home = () => {
             buttontxt="Create a Video"
           />
         )}
-        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>}
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
       />
     </SafeAreaView>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
