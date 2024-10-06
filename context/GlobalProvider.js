@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-
 import { getCurrentUser } from "../lib/appwrite";
 
 const GlobalContext = createContext();
@@ -9,6 +8,7 @@ const GlobalProvider = ({ children }) => {
   const [isLogged, setIsLogged] = useState(false);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [bookmarks, setBookmarks] = useState([]); // Added bookmarks state
 
   useEffect(() => {
     getCurrentUser()
@@ -37,6 +37,8 @@ const GlobalProvider = ({ children }) => {
         user,
         setUser,
         loading,
+        bookmarks, // Provide bookmarks
+        setBookmarks, // Provide function to set bookmarks
       }}
     >
       {children}
