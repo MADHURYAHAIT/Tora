@@ -1,3 +1,4 @@
+// home.js
 import { View, Text, FlatList, Image, RefreshControl, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -10,11 +11,10 @@ import useAppwrite from '../../lib/useAppwrite'
 import FeedVideoCard from '../../components/FeedVideoCard'
 import { useGlobalContext } from '../../context/GlobalProvider'
 
-
 const Home = () => {
-  const { data: posts, refetch } = useAppwrite(getAllPosts);
+  const { data: posts, refetch } = useAppwrite(() => getAllPosts(user.$id));
   const { data: latestPosts } = useAppwrite(getLatestPosts);
-  const { user, setUser, setIsLogged } = useGlobalContext();
+  const { user, setUser, isLogged } = useGlobalContext();
 
   const [refreshing, setRefreshing] = useState(false);
 
@@ -23,27 +23,30 @@ const Home = () => {
     await refetch();
     setRefreshing(false);
   };
-  // console.log(posts);
+
+  useEffect(() => {
+    refetch();
+  }, [user]);
+
   return (
-
-
-  
     <SafeAreaView className="bg-primary h-full">
       <FlatList
-         data={posts}
-         keyExtractor={(item) => item.$id}
-        renderItem={({item})=>(
-          <FeedVideoCard
-          title={item.title}
-          thumbnail={item.thumbnail}
-          video={item.video}
-          creator={item.creator.username}
-          avatar={item.creator.avatar}
-          id={item.$id}
-          />
-          )}
+        data={posts}
+        keyExtractor={(item) => item.$id}
+        renderItem={({ item }) => (
         
-        ListHeaderComponent={()=>(
+          <FeedVideoCard
+            title={item.title}
+            thumbnail={item.thumbnail}
+            video={item.video}
+            creator={item.creator.username}
+            avatar={item.creator.avatar}
+            id={item.$id}
+            isBookmark={item.isBookmarked}
+            tab={'home'}
+          />
+        )}
+        ListHeaderComponent={() => (
           <View className="my-6 px-4 space-y-6">
             <View className="justify-between items-start flex-row mb-3">
               <View>
@@ -51,38 +54,36 @@ const Home = () => {
                   Welcome back 👋🏻  
                 </Text>
                 <Text className="font-psemibold  text-2xl text-gray-100">
-                 {user?.username}
+                  {user?.username}
                 </Text>
               </View>
               <View className="">
                 <Image
-                source={images.logoSmall} 
-                className="w-12 h-12"
-                resizeMode='contain'
+                  source={images.logoSmall} 
+                  className="w-12 h-12"
+                  resizeMode='contain'
                 />
               </View>
             </View>
             <SearchInput/>
             <View className="w-full flex-1 pt-5 pb-8">
-              <Text className="text-gray-100 font-pregul ar mb-3 text-lg">
+              <Text className="text-gray-100 font-preg ul ar mb-3 text-lg">
                 Latest Videos
               </Text>
               <Trending post={latestPosts}/>
             </View>
           </View>
         )}
-        ListEmptyComponent={()=>(
+        ListEmptyComponent={() => (
           <EmptyState
-          title="No Videos Found"
-          subtitle="Be the first to create"
-          buttontxt="Create a Video"
+            title="No Videos Found"
+            subtitle="Be the first to create"
+            buttontxt="Create a Video"
           />
         )}
-
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>}
-        />
+      />
     </SafeAreaView>
-
   )
 }
 

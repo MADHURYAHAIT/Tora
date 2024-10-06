@@ -39,6 +39,7 @@ const Bookmark = () => {
             creator={item.creator.username}
             avatar={item.creator.avatar}
             id={item.$id}
+            tab={"bookmark"}
           />
         )}
         ListHeaderComponent={() => (
