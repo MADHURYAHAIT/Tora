@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { ResizeMode, Video } from "expo-av";
-import { View, Text, TouchableOpacity, Image } from "react-native";
-import { MenuProvider, Menu, MenuTrigger, MenuOptions, MenuOption } from "react-native-popup-menu";
+import { View, Text, TouchableOpacity, Image, ActivityIndicator } from "react-native";
 import { icons } from "../constants";
 
 import { useAppwrite } from "../lib/useAppwrite";
@@ -10,60 +9,51 @@ import { useGlobalContext } from "../context/GlobalProvider";
 
 const FeedVideoCard = ({ title, isBookmark, tab, creator, video, avatar, thumbnail, id }) => {
   const { user, isLogged } = useGlobalContext();
-  const [isBookmarked, setIsBookmarked] = useState(false);
-  const [loading, setLoading] = useState(false); // Define loading state
-  console.log("-----------");
-  console.log("data from database", isBookmark);
-  // Extract the video ID
+  const [isBookmarked, setIsBookmarked] = useState(isBookmark); // use the prop as initial state
+  const [loading, setLoading] = useState(false); // Loading state
+  const [play, setPlay] = useState(false); // Video play state
+
   const videoId = id;
 
   useEffect(() => {
-    console.log("Running useEffect:", { user, isLogged, tab, videoId, isBookmark });
-
     if (isLogged && user) {
-      setLoading(true); // Set loading to true
-      if (tab === 'bookmark') {
-        getBookmarks(user.$id).then((bookmarks) => {
-          const bookmarkedVideoIds = bookmarks.map((bookmark) => bookmark.videos.$id);
-          setIsBookmarked(bookmarkedVideoIds.includes(videoId));
-          console.log("Bookmark status:", bookmarkedVideoIds.includes(videoId)); // Debugging log
-        }).catch(error => {
-          console.error("Error fetching bookmarks:", error);
-        }).finally(() => {
-          setLoading(false); // Set loading to false
-        });
-      } else {
-        setIsBookmarked(isBookmark);
-        console.log("Setting isBookmarked from isBookmark:", isBookmark); // Debugging log
-        setLoading(false); // Set loading to false
-      }
-    }
-  }, [user, isLogged, tab, videoId, isBookmark]);
+      setLoading(true); // Show loading indicator
 
-  useEffect(() => {
-    console.log("Updating isBookmark prop:", isBookmarked);
-    // Update the isBookmark prop when the isBookmarked state changes
-    // You can add code here to update the isBookmark prop
-  }, [isBookmarked]);
+      // Fetch all bookmarks once user is logged in
+      getBookmarks(user.$id)
+        .then((bookmarks) => {
+          const bookmarkedVideoIds = bookmarks.map((bookmark) => bookmark.videos.$id);
+          setIsBookmarked(bookmarkedVideoIds.includes(videoId)); // Update bookmark state
+        })
+        .catch((error) => console.error("Error fetching bookmarks:", error))
+        .finally(() => setLoading(false)); // Hide loading indicator
+    }
+  }, [user, isLogged, videoId]);
 
   const handleBookmark = async () => {
-    if (isLogged) {
-      try {
-        if (isBookmarked) {
-          await removeBookmark(user.$id, videoId);
-        } else {
-          await addBookmark(user.$id, videoId);
-        }
-        setIsBookmarked(!isBookmarked);
-      } catch (error) {
-        console.log(error);
-      }
-    } else {
+    if (!isLogged) {
       console.log("User is not logged in");
+      return;
+    }
+
+    setLoading(true); // Show loading indicator while updating
+
+    try {
+      if (isBookmarked) {
+        await removeBookmark(user.$id, videoId);
+      } else {
+        await addBookmark(user.$id, videoId);
+      }
+
+      // After toggling, fetch updated bookmarks
+      const updatedBookmarks = await getBookmarks(user.$id);
+      setIsBookmarked(updatedBookmarks.map((b) => b.videos.$id).includes(videoId));
+    } catch (error) {
+      console.error("Error updating bookmark:", error);
+    } finally {
+      setLoading(false); // Hide loading indicator
     }
   };
-
-  const [play, setPlay] = useState(false);
 
   return (
     <View className="flex flex-col items-center px-4 mb-14">
@@ -80,7 +70,7 @@ const FeedVideoCard = ({ title, isBookmark, tab, creator, video, avatar, thumbna
           <View className="flex justify-center flex-1 ml-3 gap-y-1">
             <Text
               className="font-psemibold text-sm text-white"
- numberOfLines={1}
+              numberOfLines={1}
             >
               {title}
             </Text>
@@ -96,17 +86,19 @@ const FeedVideoCard = ({ title, isBookmark, tab, creator, video, avatar, thumbna
         <View className="flex justify-center items-center flex-row flex-2">
           <TouchableOpacity
             onPress={handleBookmark}
+            disabled={loading} // Disable while loading
             className=""
           >
-            {console.log("data displayed", isBookmarked)}
-            <Image
-              source={isBookmarked ? icons.heart : icons.bookmark}
-              resizeMode="contain"
-              className="w-10 h-8"
-            />
-
+            {loading ? (
+              <ActivityIndicator size="small" color="#fff" />
+            ) : (
+              <Image
+                source={isBookmarked ? icons.heart : icons.bookmark}
+                resizeMode="contain"
+                className="w-10 h-8"
+              />
+            )}
           </TouchableOpacity>
-
         </View>
       </View>
 
@@ -131,10 +123,9 @@ const FeedVideoCard = ({ title, isBookmark, tab, creator, video, avatar, thumbna
         >
           <Image
             source={{ uri: thumbnail }}
-            className=" w-full h-full rounded-xl mt-3"
+            className="w-full h-full rounded-xl mt-3"
             resizeMode="cover"
           />
-
           <Image
             source={icons.play}
             className="w-12 h-12 absolute"
