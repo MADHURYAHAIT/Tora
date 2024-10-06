@@ -1,4 +1,5 @@
-import { View, Text, FlatList, Image, RefreshControl, Alert } from 'react-native';
+// Home.js
+import { View, Text, FlatList, Image, RefreshControl } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { images } from '../../constants';
@@ -13,9 +14,10 @@ import { useGlobalContext } from '../../context/GlobalProvider';
 const Home = () => {
   const { user, isLogged } = useGlobalContext();
   const { data: posts, refetch } = useAppwrite(() => getAllPosts(user?.$id)); // Ensure user exists before calling
-  const { data: latestPosts } = useAppwrite(getLatestPosts);
+  const { data: latestPosts } = useAppwrite(() => getLatestPosts(user?.$id)); // Pass user ID to getLatestPosts
 
   const [refreshing, setRefreshing] = useState(false);
+  const [isBookmark, setIsBookmark] = useState({});
 
   const onRefresh = async () => {
     setRefreshing(true);
@@ -42,7 +44,8 @@ const Home = () => {
             creator={item.creator.username}
             avatar={item.creator.avatar}
             id={item.$id}
-            isBookmark={item.isBookmarked} // Pass bookmark status
+            isBookmark={item.isBookmarked}
+            setIsBookmark={setIsBookmark}
             tab={'home'} // Keep the tab functionality
           />
         )}

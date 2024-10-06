@@ -1,3 +1,4 @@
+// FeedVideoCard.jsx
 import { useState, useEffect } from "react";
 import { ResizeMode, Video } from "expo-av";
 import { View, Text, TouchableOpacity, Image, ActivityIndicator } from "react-native";
@@ -5,13 +6,15 @@ import { icons } from "../constants";
 import { addBookmark, removeBookmark, getBookmarks } from "../lib/appwrite";
 import { useGlobalContext } from "../context/GlobalProvider";
 
-const FeedVideoCard = ({ title, isBookmark, tab, creator, video, avatar, thumbnail, id }) => {
+const FeedVideoCard = ({ title, isBookmark, tab, creator, video, avatar, thumbnail, id, setIsBookmark }) => {
+  console.log("--------------------------------------");
+  console.log("backend data",isBookmark);
   const { user, isLogged } = useGlobalContext();
-  const [isBookmarked, setIsBookmarked] = useState(isBookmark);
+  const [isBookmarked, setIsBookmarked] = useState(isBookmark !== undefined ? isBookmark : false);
   const [loading, setLoading] = useState(false);
   const [play, setPlay] = useState(false);
-
   const videoId = id;
+  console.log("front end displayed data",isBookmarked);
 
   useEffect(() => {
     // If user is logged in, check the bookmark status
@@ -19,9 +22,13 @@ const FeedVideoCard = ({ title, isBookmark, tab, creator, video, avatar, thumbna
       if (isLogged && user) {
         setLoading(true);
         try {
-          const bookmarks = await getBookmarks(user.$id);
-          const bookmarkedVideoIds = bookmarks.map((bookmark) => bookmark.videos.$id);
-          setIsBookmarked(bookmarkedVideoIds.includes(videoId));
+          if (tab === 'bookmark') {
+            const bookmarks = await getBookmarks(user.$id);
+            const bookmarkedVideoIds = bookmarks.map((bookmark) => bookmark.videos.$id);
+            setIsBookmarked(bookmarkedVideoIds.includes(videoId));
+          } else {
+            setIsBookmarked(isBookmark !== undefined ? isBookmark : false);
+          }
         } catch (error) {
           console.error("Error fetching bookmarks:", error);
         } finally {
@@ -29,13 +36,18 @@ const FeedVideoCard = ({ title, isBookmark, tab, creator, video, avatar, thumbna
         }
       }
     };
-
+  
     fetchBookmarks();
-  }, [user, isLogged, videoId]);
+  }, [user, isLogged, videoId, tab, isBookmark]);
+
+useEffect(() => {
+  // Update the isBookmark prop when the isBookmarked state changes
+  setIsBookmark(isBookmarked);
+}, [isBookmarked]);
 
   const handleBookmark = async () => {
     if (!isLogged) {
-      console.log("User is not logged in");
+      console.log("User  is not logged in");
       return;
     }
 
@@ -97,7 +109,7 @@ const FeedVideoCard = ({ title, isBookmark, tab, creator, video, avatar, thumbna
         <Video
           source={{ uri: video }}
           className="w-full h-60 rounded-xl mt-3"
-          resizeMode={ResizeMode.CONTAIN}
+          resizeMode ={ResizeMode.CONTAIN}
           useNativeControls
           shouldPlay
           onPlaybackStatusUpdate={(status) => {

@@ -1,3 +1,4 @@
+// Bookmark.js
 import { useEffect, useState } from "react";
 import { View, Text, FlatList, RefreshControl } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -11,6 +12,7 @@ const Bookmark = () => {
   const { user } = useGlobalContext();
   const { data: bookmarkedVideos, loading, refetch } = useAppwrite(() => getBookmarkedVideos({ equals: user.$id }));
   const [refreshing, setRefreshing] = useState(false);
+  const [isBookmark, setIsBookmark] = useState({});
 
   const onRefresh = async () => {
     setRefreshing(true);
@@ -33,11 +35,14 @@ const Bookmark = () => {
             thumbnail={item.thumbnail}
             video={item.video}
             creator={item.creator.username}
-            avatar={item.creator.avatar}
+            avatar={ item.creator.avatar}
             id={item.$id}
-            isBookmark={item.isBookmarked} // Ensure isBookmarked prop is being used
+            isBookmark={isBookmark[item.$id]}
+            setIsBookmark={setIsBookmark}
             tab={"bookmark"} // Keep the tab functionality
           />
+
+          
         )}
         ListHeaderComponent={() => (
           <View className="flex my-6 px-4">
