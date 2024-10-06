@@ -21,11 +21,7 @@ const EmptyState = ({title,subtitle,buttontxt}) => {
 
         <CustomButton 
           title={buttontxt}
-<<<<<<< HEAD
           handlePress={() => router.push(buttontxt === "Create a Video"? '/create' : '/home')}
-=======
-          handlePress={() => router.push(buttontxt === "Add a Bookmark Now"? '/home' : '/create')}
->>>>>>> 3eadc8e425f36f17e467ca3cd8ef6b5dbd4089a7
           containerStyles="w-[98%] my-12"
         />
     </View>
