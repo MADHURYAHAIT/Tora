@@ -6,15 +6,15 @@ import { icons } from "../constants";
 import { addBookmark, removeBookmark, getBookmarks } from "../lib/appwrite";
 import { useGlobalContext } from "../context/GlobalProvider";
 
-const FeedVideoCard = ({ title, isBookmark, tab, creator, video, avatar, thumbnail, id, setIsBookmark }) => {
-  console.log("--------------------------------------");
-  console.log("backend data",isBookmark);
+const FeedVideoCard = ({ title, isBookmark, tab, creator, video, avatar, thumbnail, id, setIsBookmark, onBookmark = () => {} }) => {
+  // console.log("--------------------------------------");
+  //console.log("backend data",isBookmark);
   const { user, isLogged } = useGlobalContext();
   const [isBookmarked, setIsBookmarked] = useState(isBookmark !== undefined ? isBookmark : false);
   const [loading, setLoading] = useState(false);
   const [play, setPlay] = useState(false);
   const videoId = id;
-  console.log("front end displayed data",isBookmarked);
+ // console.log("front end displayed data",isBookmarked);
 
   useEffect(() => {
     // If user is logged in, check the bookmark status
@@ -47,7 +47,7 @@ useEffect(() => {
 
   const handleBookmark = async () => {
     if (!isLogged) {
-      console.log("User  is not logged in");
+      console.log("User   is not logged in");
       return;
     }
 
@@ -60,6 +60,7 @@ useEffect(() => {
         await addBookmark(user.$id, videoId);
         setIsBookmarked(true); // Update state immediately
       }
+      onBookmark(videoId); // Call the onBookmark function
     } catch (error) {
       console.error("Error updating bookmark:", error);
     } finally {
@@ -90,19 +91,19 @@ useEffect(() => {
         </View>
 
         <View className="flex justify-center items-center flex-row flex-2">
-          <TouchableOpacity onPress={handleBookmark} disabled={loading}>
-            {loading ? (
-              <ActivityIndicator size="small" color="#CDCDE0" />
-            ) : (
-              <Image
-                source={isBookmarked ? icons.booked : icons.unbooked}
-                resizeMode="contain"
-                className="w-10 h-8"
-                style={{ tintColor: isBookmarked ? "#FFA001" : "#CDCDE0" }}
-              />
-            )}
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity onPress={handleBookmark} disabled={loading}>
+        {loading ? (
+          <ActivityIndicator size="small" color="#CDCDE0" />
+        ) : (
+          <Image
+            source={isBookmarked ? icons.booked : icons.unbooked}
+            resizeMode="contain"
+            className="w-10 h-8"
+            style={{ tintColor: isBookmarked ? "#FFA001" : "#CDCDE0" }}
+          />
+        )}
+      </TouchableOpacity>
+    </View>
       </View>
 
       {play ? (

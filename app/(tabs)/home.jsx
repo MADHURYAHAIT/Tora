@@ -18,9 +18,7 @@ const Home = () => {
 
   const [refreshing, setRefreshing] = useState(false);
   const [isBookmark, setIsBookmark] = useState({});
-  const handleBookmarkChange = (id, isBookmarked) => {
-    setIsBookmark((prevIsBookmark) => ({ ...prevIsBookmark, [id]: isBookmarked }));
-  };
+
   const onRefresh = async () => {
     setRefreshing(true);
     await refetch();
@@ -47,7 +45,7 @@ const Home = () => {
             avatar={item.creator.avatar}
             id={item.$id}
             isBookmark={item.isBookmarked}
-            setIsBookmark={handleBookmarkChange}
+            setIsBookmark={setIsBookmark}
             tab={'home'} // Keep the tab functionality
           />
         )}
