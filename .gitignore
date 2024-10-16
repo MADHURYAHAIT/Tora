@@ -8,7 +8,6 @@ node_modules/
 dist/
 web-build/
 
-lib
 igg.mp4
 # Native
 *.orig.*
