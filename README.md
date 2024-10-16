@@ -1,2 +1,21 @@
-An Social Platform which can be used to share ai generated videos & happiness.
-This is made in React Native.
+<h1> Tora: An AI Video Sharing Platform</h1>
+<hr/>
+
+![image](https://github.com/user-attachments/assets/4cbbf591-393e-424e-abf9-88af42ac5915)
+
+**This Repo is open for contribution**
+
+**Overview**
+
+Tora is a video sharing platform built using React Native and Appwrite. It allows users to create, share, and discover videos. The platform features a user-friendly interface, bookmarking functionality, and a robust backend powered by Appwrite.
+
+**_Features_**
+
+User Authentication: Users can create accounts and log in to access the platform's features.
+Video Upload: Users can upload Ai Generated videos to share with the community.
+Bookmarking: Users can bookmark their favorite videos for easy access.
+Video Discovery: Users can discover new videos through the platform's trending section.
+Search Functionality: Users can search for specific videos using keywords.
+
+Have  fun sharing happiness.
+
