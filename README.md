@@ -3,9 +3,11 @@
 
 ![image](https://github.com/user-attachments/assets/4cbbf591-393e-424e-abf9-88af42ac5915)  ![image](https://github.com/user-attachments/assets/dbb0b6b9-c492-4b7e-8a0b-8bd08b076e14) 
 
+<hr/>
 
-
-**This Repo is open for contribution**
+**------------ This Repo is open for contribution ------------**<br/>
+Kindly generate an Issue and ask the issue to be assigned to you.
+<hr/>
 
 **Overview**
 
@@ -20,4 +22,12 @@ Video Discovery: Users can discover new videos through the platform's trending s
 Search Functionality: Users can search for specific videos using keywords.
 
 Have  fun sharing happiness.
+
+To Run -
+
+      npm i
+
+Once your emulator / android device is configured hit -
+
+      npm run android
 
