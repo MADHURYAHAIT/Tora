@@ -1,7 +1,9 @@
 <h1> Tora: An AI Video Sharing Platform</h1>
 <hr/>
 
-![image](https://github.com/user-attachments/assets/4cbbf591-393e-424e-abf9-88af42ac5915)
+![image](https://github.com/user-attachments/assets/4cbbf591-393e-424e-abf9-88af42ac5915)  ![image](https://github.com/user-attachments/assets/dbb0b6b9-c492-4b7e-8a0b-8bd08b076e14) 
+
+
 
 **This Repo is open for contribution**
 
