@@ -20,6 +20,7 @@ Video Upload: Users can upload Ai Generated videos to share with the community.
 Bookmarking: Users can bookmark their favorite videos for easy access.
 Video Discovery: Users can discover new videos through the platform's trending section.
 Search Functionality: Users can search for specific videos using keywords.
+and much more
 
 Have  fun sharing happiness.
 
