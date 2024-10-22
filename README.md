@@ -22,7 +22,7 @@ Video Discovery: Users can discover new videos through the platform's trending s
 Search Functionality: Users can search for specific videos using keywords.
 and much more
 
-Have  fun sharing happiness.
+Have fun sharing happiness.
 
 To Run -
 
